@@ -1,13 +1,20 @@
-eureka:
-  client:
-    registerWithEureka: true
-    fetchRegistry: true
-    serviceUrl:
-      defaultZone: http://localhost:8080/eureka/
-  instance:
-    hostname: localhost
-server:
-  port: 8084
-spring:
-  application:
-    name: accountManagement-service
+#eureka:
+#  client:
+#    registerWithEureka: true
+#    fetchRegistry: true
+#    serviceUrl:
+#      defaultZone: http://localhost:8080/eureka/
+#  instance:
+#    hostname: localhost
+#server:
+#  port: 8084
+#spring:
+#  application:
+#    name: accountManagement-service
+    
+security:
+  oauth2:
+    client:
+      clientId: ABCD
+      clientSecret: ABCD
+      
