@@ -20,8 +20,8 @@ public class UserAccountType {
 
 	@Id
     @GeneratedValue
-    @Column(name="accountTypeId")
-	private Integer accountTypeId;
+    @Column(name="id")
+	private Integer id;
 	
 	@Column(name="accountType")
 	private String accountType;

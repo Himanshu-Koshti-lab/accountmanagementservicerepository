@@ -20,8 +20,8 @@ public class UserAccountStatusType {
 
 	@Id
     @GeneratedValue
-    @Column(name="accountStatusId")
-    private Integer accountStatusId;
+    @Column(name="id")
+    private Integer id;
 	
 	 @Column(name = "accountStatus")
 	 private String accountStatus;

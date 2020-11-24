@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tcs.poc.app.entity.User;
+import com.tcs.poc.app.model.AccountCreationRequest;
 import com.tcs.poc.app.service.AccountService;
 
 
 @RestController
-@RequestMapping("/service")
 @CrossOrigin
 public class AccountController {
 
@@ -23,9 +23,9 @@ public class AccountController {
 	
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/register-account", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public void createAccountRequest(@RequestBody User user) throws Exception {
+	public void createAccountRequest(@RequestBody AccountCreationRequest user) throws Exception {
 
-		service.createAccountRequest(user);
+		service.accountCreationRequest(user);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/register-accountApprove", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

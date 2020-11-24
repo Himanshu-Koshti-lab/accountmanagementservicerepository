@@ -1,13 +1,19 @@
 package com.tcs.poc.app.service;
 
 import java.util.Date;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tcs.poc.app.entity.Account;
 import com.tcs.poc.app.entity.User;
+import com.tcs.poc.app.entity.UserAccountStatusType;
+import com.tcs.poc.app.entity.UserAccountType;
+import com.tcs.poc.app.model.AccountCreationRequest;
 import com.tcs.poc.app.repository.AccountRepository;
+import com.tcs.poc.app.repository.UserAccountStatusTypeRepository;
+import com.tcs.poc.app.repository.UserAccountTypeRepository;
 import com.tcs.poc.app.repository.UserRepository;
 
 @Service
@@ -19,15 +25,25 @@ public class AccountService {
 	@Autowired
 	private UserRepository registrationRepository;
 
-	public void createAccountRequest(User user) throws Exception {
+	@Autowired
+	private UserAccountTypeRepository userAccountTypeRepository;
+
+	@Autowired
+	private UserAccountStatusTypeRepository userAccountStatusTypeRepository;
+
+	public void accountCreationRequest(AccountCreationRequest user) throws Exception {
 		Account account = new Account();
 		com.tcs.poc.app.entity.User tempUser = registrationRepository.findByEmailID(user.getEmailID());
 		if (tempUser == null) {
 			throw new Exception("");
 		} else {
+
+			Optional<UserAccountType> userAccountType = userAccountTypeRepository.findById(1);
+			Optional<UserAccountStatusType> userAccountStatusType = userAccountStatusTypeRepository.findById(1);
+
 			account.setUserId(tempUser.getId());
-			account.setAccountStatusId(0);
-			account.setAccountTypeId(0);
+			account.setUserAccountType(userAccountType.get());
+			account.setUserAccountStatusType(userAccountStatusType.get());
 			account.setCreatedDate(new Date());
 			account.setLastModifiedDate(new Date());
 			account.setCreatedBy(tempUser.getEmailID());
@@ -42,10 +58,22 @@ public class AccountService {
 
 		com.tcs.poc.app.entity.User tempUser = registrationRepository.findByEmailID(user.getEmailID());
 		Account tempAccount = accountRepository.findByUserId(tempUser.getId());
-		tempAccount.setAccountStatusId(1);
-		int tempAccountNo = (int) (Math.random() * 100000);
-		if (accountRepository.findByAccountNumber(tempAccountNo) == null) {
-			tempAccount.setAccountNumber(tempAccountNo);
+
+		// accountRepository.findByAccountNumber(tempAccountNo) == null &&
+
+		if (tempAccount.getUserAccountStatusType().getId() == 1) {
+			Optional<UserAccountType> userAccountType = userAccountTypeRepository.findById(2);
+			Optional<UserAccountStatusType> userAccountStatusType = userAccountStatusTypeRepository.findById(2);
+			boolean x = true;
+			while (x) {
+				int tempAccountNo = (int) (Math.random() * 100000);
+				tempAccount.setAccountNumber(tempAccountNo);
+				x = !(accountRepository.findByAccountNumber(tempAccountNo) == null);
+				
+			}
+			tempAccount.setUserAccountType(userAccountType.get());
+			tempAccount.setBalance(500);
+			tempAccount.setUserAccountStatusType(userAccountStatusType.get());
 			System.out.println(tempAccount.getAccountNumber());
 			accountRepository.save(tempAccount);
 		}

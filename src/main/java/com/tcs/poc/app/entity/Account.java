@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -33,11 +35,6 @@ public class Account {
     @Column(name="balance")
 	private double balance;
     
-    @Column(name="accountStatusId")
-	private int accountStatusId;
-    
-    @Column(name="accountTypeId")
-    private int accountTypeId;
     
     @Column(name="created_date")
     private Date createdDate;
@@ -51,13 +48,12 @@ public class Account {
     @Column(name="modified_by")
     private String modifiedBy;
 
-//    @OneToOne
-//    @JoinColumn(name = "userAccountStatusType", referencedColumnName = "accountStatusId")
-//    private UserAccountStatusType userAccountStatusType;
-//    
-//    @OneToOne
-//    @JoinColumn(name = "userAccountType", referencedColumnName = "accountTypeId")
-//    private UserAccountType userAccountType;
     
+    @OneToOne
+    @JoinColumn(name = "userAccountType", referencedColumnName = "id")
+    private UserAccountType userAccountType;
 	
+    @OneToOne
+    @JoinColumn(name = "UserAccountStatusType", referencedColumnName = "id")
+    private UserAccountStatusType userAccountStatusType;
 }
