@@ -7,6 +7,6 @@ import lombok.Data;
 @Data
 public class AccountStatusRequest {
 	
-	private int AccountStatus;
+	private int accountStatus;
 	private String emailID;
 }

@@ -120,12 +120,16 @@ public class AccountService {
 	public AccountStatusResponse UpdateAccountStatus(AccountStatusRequest user) throws Exception {
 		User tempUser = registrationRepository.findByEmailID(user.getEmailID());
 		Account tempAccount = accountRepository.findByUserId(tempUser.getId());
+		System.out.println(user.getEmailID());
+		System.out.println(tempUser.getId());
 		if(tempUser == null) {
 			throw new Exception("User not found");
 		}else if (tempAccount == null) {
 			throw new Exception("Account not Found");
 		}else {
+			System.out.println(user.getAccountStatus());
 			Optional<UserAccountStatusType> userAccountStatusType = userAccountStatusTypeRepository.findById(user.getAccountStatus());
+			System.out.println(userAccountStatusType.get());
 			tempAccount.setUserAccountStatusType(userAccountStatusType.get());
 			accountRepository.save(tempAccount);
 			AccountStatusResponse accountStatusResponse = new AccountStatusResponse();
