@@ -29,8 +29,14 @@ public class AccountController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/register-accountApprove", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public void verifyAccountRequest(@RequestBody User user)
+	public void verifyAccountRequestApproved(@RequestBody User user) throws Exception
 	{
-		service.verifyAccountRequest(user);
+		service.verifyAccountRequestApproved(user);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/register-accountReject", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public void verifyAccountRequestReject(@RequestBody User user) throws Exception
+	{
+		service.verifyAccountRequestReject(user);
 	}
 }

@@ -56,4 +56,8 @@ public class Account {
     @OneToOne
     @JoinColumn(name = "UserAccountStatusType", referencedColumnName = "id")
     private UserAccountStatusType userAccountStatusType;
+    
+    @OneToOne
+    @JoinColumn(name = "AccountRegStatusType", referencedColumnName = "id")
+    private AccountRegStatusType AccountRegStatusType;
 }
