@@ -27,7 +27,8 @@ public class AccountController {
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/register-account", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public void createAccountRequest(@RequestBody AccountCreationRequest user ,@AuthenticationPrincipal String emailID) throws Exception {
-		if(user.getEmailID() == emailID) {
+		
+		if(user.getEmailID().equals(emailID)) {
 			service.accountCreationRequest(user);
 		}else {
 			throw new Exception("User Mismatch");
