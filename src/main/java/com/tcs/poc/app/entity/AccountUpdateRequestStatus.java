@@ -14,8 +14,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "UserUpdateRequestStatus")
-public class UserUpdateRequestStatus {
+@Table(name = "AccountUpdateRequestStatus")
+public class AccountUpdateRequestStatus {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

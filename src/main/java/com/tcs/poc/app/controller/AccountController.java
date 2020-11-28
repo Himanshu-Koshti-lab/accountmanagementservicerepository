@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tcs.poc.app.entity.User;
 import com.tcs.poc.app.model.AccountCreationRequest;
-import com.tcs.poc.app.model.AccountStatusRequest;
-import com.tcs.poc.app.model.AccountStatusResponse;
 import com.tcs.poc.app.service.AccountService;
 
 
@@ -48,11 +46,7 @@ public class AccountController {
 		service.verifyAccountRequestReject(user);
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, value = "/UpdateAccountStatus", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public AccountStatusResponse UpdateAccountStatus(@RequestBody AccountStatusRequest user) throws Exception
-	{
-		return service.UpdateAccountStatus(user);
-	}
+	
 	
 	
 	
