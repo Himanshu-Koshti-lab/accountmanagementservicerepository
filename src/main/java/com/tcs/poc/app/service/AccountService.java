@@ -79,7 +79,7 @@ public class AccountService {
 			Optional<AccountRegStatusType> AccountRegStatusType = AccountRegStatusTypeRepo.findById(2);
 			boolean x = true;
 			while (x) {
-				int tempAccountNo = (int) (Math.random() * 100000);
+				int tempAccountNo = (int) (Math.random() * 1000000);
 				tempAccount.setAccountNumber(tempAccountNo);
 				x = !(accountRepository.findByAccountNumber(tempAccountNo) == null);
 
