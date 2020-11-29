@@ -6,6 +6,6 @@ import com.tcs.poc.app.entity.AccountUpdateRequest;
 
 public interface AccountUpdateRequestRepo extends JpaRepository<AccountUpdateRequest, Integer>{
 
-	AccountUpdateRequest findByUserID(int userid);
+	AccountUpdateRequest findByUserId(int userid);
 
 }

@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "Account")
+@Table(name = "AccountUpdateRequest")
 public class AccountUpdateRequest {
 
 	@Id

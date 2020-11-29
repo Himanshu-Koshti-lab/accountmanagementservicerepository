@@ -3,6 +3,7 @@ package com.tcs.poc.app.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,13 +34,15 @@ public class AccountController {
 		}
 		
 	}
-	
+
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.POST, value = "/register-accountApprove", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public void verifyAccountRequestApproved(@RequestBody User user) throws Exception
 	{
 		service.verifyAccountRequestApproved(user);
 	}
-	
+
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.POST, value = "/register-accountReject", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public void verifyAccountRequestReject(@RequestBody User user) throws Exception
 	{

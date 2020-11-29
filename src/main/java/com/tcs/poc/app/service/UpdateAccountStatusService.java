@@ -51,7 +51,7 @@ public class UpdateAccountStatusService{
 	}
 
 	public UpdateAccountStatusResponse UpdateAccountStatusApproved(UpdateAccountStatusRequest request) {
-		AccountUpdateRequest reqtable = accrepo.findByUserID(request.getUserid());
+		AccountUpdateRequest reqtable = accrepo.findByUserId(request.getUserid());
 		Account mainaccount = accountrepo.findByUserId(request.getUserid());
 		UpdateAccountStatusResponse response = new UpdateAccountStatusResponse();
 		if (reqtable.getUserId() == mainaccount.getUserId() && reqtable.getAccountUpdateRequestStatus().getId() == 1) {
@@ -72,7 +72,7 @@ public class UpdateAccountStatusService{
 
 	public UpdateAccountStatusResponse UpdateMobileNoRejected(UpdateAccountStatusRequest request) {
 		UpdateAccountStatusResponse response = new UpdateAccountStatusResponse();
-		AccountUpdateRequest Areqtable = accrepo.findByUserID(request.getUserid());
+		AccountUpdateRequest Areqtable = accrepo.findByUserId(request.getUserid());
 		Account mainaccount = accountrepo.findByUserId(request.getUserid());
 		if (Areqtable.getUserId() == mainaccount.getUserId() && Areqtable.getAccountUpdateRequestStatus().getId() == 1) {
 			AccountUpdateRequestStatus status = accUpdReqRepo.findById(3);
