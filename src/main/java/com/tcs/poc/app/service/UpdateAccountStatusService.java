@@ -70,7 +70,7 @@ public class UpdateAccountStatusService{
 
 	}
 
-	public UpdateAccountStatusResponse UpdateMobileNoRejected(UpdateAccountStatusRequest request) {
+	public UpdateAccountStatusResponse UpdateAccountStatusRejected(UpdateAccountStatusRequest request) {
 		UpdateAccountStatusResponse response = new UpdateAccountStatusResponse();
 		AccountUpdateRequest Areqtable = accrepo.findByUserId(request.getUserid());
 		Account mainaccount = accountrepo.findByUserId(request.getUserid());

@@ -33,6 +33,8 @@ public class AccountUpdateRequest {
 	@Column(name="userId")
 	private int userId;
     
+    @Column(name="emailID")
+    private String emailID;
     
     @Column(name="created_date")
     private Date createdDate;
