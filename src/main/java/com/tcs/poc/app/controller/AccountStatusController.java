@@ -11,15 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tcs.poc.app.entity.Account;
 import com.tcs.poc.app.entity.AccountUpdateRequest;
-import com.tcs.poc.app.entity.UserUpdateRequest;
 import com.tcs.poc.app.model.UpdateAccountStatusRequest;
 import com.tcs.poc.app.model.UpdateAccountStatusResponse;
-import com.tcs.poc.app.model.UpdateMobileRequest;
-import com.tcs.poc.app.model.UpdateMobileResponse;
 import com.tcs.poc.app.service.UpdateAccountStatusService;
-import com.tcs.poc.app.service.UpdateMobileNoService;
 
 @RestController
 @CrossOrigin 
@@ -42,20 +37,20 @@ class AccountStatusController {
 	}
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@GetMapping(value = "/requestlist")
+	@GetMapping(value = "/AccountStatusrequestlist")
 	public List<AccountUpdateRequest> findAllRequests() {
 		return service.getUserRequests();
 	}
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@PostMapping(value = "/UpdateMobileNoRequestApproved")
+	@PostMapping(value = "/UpdateAccountStatusApproved")
 	public UpdateAccountStatusResponse UpdateAccountStatusResponse(@RequestBody UpdateAccountStatusRequest request) {
 		System.out.println(request.getEmailId());
 		return service.UpdateAccountStatusApproved(request);
 	}
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@PostMapping(value = "/UpdateMobileNoRequestReject")
+	@PostMapping(value = "/UpdateAccountStatusReject")
 	public UpdateAccountStatusResponse UpdateAccountStatusRejected(@RequestBody UpdateAccountStatusRequest request) {
 		System.out.println(request.getEmailId());
 		return service.UpdateAccountStatusRejected(request);
