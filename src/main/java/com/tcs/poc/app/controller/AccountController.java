@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tcs.poc.app.entity.User;
 import com.tcs.poc.app.model.AccountCreationRequest;
+import com.tcs.poc.app.model.AccountCreationResponse;
 import com.tcs.poc.app.service.AccountService;
 
 
@@ -25,29 +26,29 @@ public class AccountController {
 	
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/register-account", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public void createAccountRequest(@RequestBody AccountCreationRequest user ,@AuthenticationPrincipal String emailID) throws Exception {
+	public AccountCreationResponse createAccountRequest(@RequestBody AccountCreationRequest user ,@AuthenticationPrincipal String emailID) throws Exception {
 		
 		if(user.getEmailID().equals(emailID)) {
-			service.accountCreationRequest(user);
+		 	return service.accountCreationRequest(user);
 		}else {
 			throw new Exception("User Mismatch");
 		}
 		
 	}
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(method = RequestMethod.POST, value = "/register-accountApprove", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public void verifyAccountRequestApproved(@RequestBody User user) throws Exception
-	{
-		service.verifyAccountRequestApproved(user);
-	}
-
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(method = RequestMethod.POST, value = "/register-accountReject", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public void verifyAccountRequestReject(@RequestBody User user) throws Exception
-	{
-		service.verifyAccountRequestReject(user);
-	}
+//	@PreAuthorize("hasRole('ROLE_ADMIN')")
+//	@RequestMapping(method = RequestMethod.POST, value = "/register-accountApprove", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+//	public void verifyAccountRequestApproved(@RequestBody User user) throws Exception
+//	{
+//		service.verifyAccountRequestApproved(user);
+//	}
+//
+//	@PreAuthorize("hasRole('ROLE_ADMIN')")
+//	@RequestMapping(method = RequestMethod.POST, value = "/register-accountReject", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+//	public void verifyAccountRequestReject(@RequestBody User user) throws Exception
+//	{
+//		service.verifyAccountRequestReject(user);
+//	}
 	
 	
 	

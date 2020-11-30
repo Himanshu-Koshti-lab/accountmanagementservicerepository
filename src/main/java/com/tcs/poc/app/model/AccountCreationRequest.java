@@ -22,5 +22,6 @@ public class AccountCreationRequest {
 	private String modifiedBy;
 	private int userAccountType;
 	private String emailID;
+	private int user_id;
 	
 }
