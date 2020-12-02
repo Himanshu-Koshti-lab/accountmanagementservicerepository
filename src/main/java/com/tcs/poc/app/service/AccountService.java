@@ -152,9 +152,16 @@ public class AccountService {
 			return response;
 		}
 		if (listofUserAccounts.size() == 2) {
-
+			System.out.println("155");
 			if (listofUserAccounts.get(0).getAccountRegStatusType().getId() == 2
 					&& listofUserAccounts.get(0).getUserAccountType().getId() == request.getAccounttype()
+					&& request.getAccounttype() == 1) {
+				response.setStatusCode(111);
+				response.setMessage("Salary Account request already approved");
+				return response;
+			}
+			if (listofUserAccounts.get(1).getAccountRegStatusType().getId() == 2
+					&& listofUserAccounts.get(1).getUserAccountType().getId() == request.getAccounttype()
 					&& request.getAccounttype() == 1) {
 				response.setStatusCode(111);
 				response.setMessage("Salary Account request already approved");
@@ -167,11 +174,32 @@ public class AccountService {
 				response.setMessage("Current Account request already approved");
 				return response;
 			}
+			if (listofUserAccounts.get(1).getAccountRegStatusType().getId() == 2
+					&& listofUserAccounts.get(1).getUserAccountType().getId() == request.getAccounttype()
+					&& request.getAccounttype() == 2) {
+				response.setStatusCode(112);
+				response.setMessage("Current Account request already approved");
+				return response;
+			}
+			if (listofUserAccounts.get(0).getAccountRegStatusType().getId() == 3
+					&& listofUserAccounts.get(0).getUserAccountType().getId() == request.getAccounttype()
+					&& request.getAccounttype() == 1) {
+				response.setStatusCode(113);
+				response.setMessage("Salary Account request already Rejected");
+				return response;
+			}
 			if (listofUserAccounts.get(1).getAccountRegStatusType().getId() == 3
 					&& listofUserAccounts.get(1).getUserAccountType().getId() == request.getAccounttype()
 					&& request.getAccounttype() == 1) {
 				response.setStatusCode(113);
 				response.setMessage("Salary Account request already Rejected");
+				return response;
+			}
+			if (listofUserAccounts.get(0).getAccountRegStatusType().getId() == 3
+					&& listofUserAccounts.get(0).getUserAccountType().getId() == request.getAccounttype()
+					&& request.getAccounttype() == 2) {
+				response.setStatusCode(114);
+				response.setMessage("Current Account request already Rejected");
 				return response;
 			}
 			if (listofUserAccounts.get(1).getAccountRegStatusType().getId() == 3
@@ -266,8 +294,58 @@ public class AccountService {
 				return response;
 			}
 		}
-		response.setStatusCode(115);
-		response.setMessage("Pending For Approved reject");
+		if (request.getAccountregstatus() == 3) {
+			System.out.println("Inside Rejection");
+			System.out.println(listofUserAccounts.get(0).getAccountRegStatusType().getId());
+			System.out.println(listofUserAccounts.get(0).getUserAccountType().getId());
+			System.out.println(request.getAccounttype());
+			if (listofUserAccounts.get(0).getAccountRegStatusType().getId() == 1
+					&& listofUserAccounts.get(0).getUserAccountType().getId() == request.getAccounttype() && request.getAccounttype() == 1) {
+				Optional<AccountRegStatusType> AccountRegStatusType = AccountRegStatusTypeRepo.findById(3);
+				Optional<UserAccountStatusType> userAccountStatusType = userAccountStatusTypeRepository.findById(3);
+				listofUserAccounts.get(0).setUserAccountStatusType(userAccountStatusType.get());
+				listofUserAccounts.get(0).setAccountRegStatusType(AccountRegStatusType.get());
+				accountRepository.save(listofUserAccounts.get(0));
+				response.setStatusCode(116);
+				response.setMessage("Salary Rejected ");
+				return response;
+			}
+			if (listofUserAccounts.get(1).getAccountRegStatusType().getId() == 1
+					&& listofUserAccounts.get(1).getUserAccountType().getId() == request.getAccounttype() && request.getAccounttype() == 1) {
+				Optional<AccountRegStatusType> AccountRegStatusType = AccountRegStatusTypeRepo.findById(3);
+				Optional<UserAccountStatusType> userAccountStatusType = userAccountStatusTypeRepository.findById(3);
+				listofUserAccounts.get(1).setUserAccountStatusType(userAccountStatusType.get());
+				listofUserAccounts.get(1).setAccountRegStatusType(AccountRegStatusType.get());
+				accountRepository.save(listofUserAccounts.get(1));
+				response.setStatusCode(116);
+				response.setMessage("Salary Rejected ");
+				return response;
+			}
+			if (listofUserAccounts.get(0).getAccountRegStatusType().getId() == 1
+					&& listofUserAccounts.get(0).getUserAccountType().getId() == request.getAccounttype() && request.getAccounttype() == 2) {
+				Optional<AccountRegStatusType> AccountRegStatusType = AccountRegStatusTypeRepo.findById(3);
+				Optional<UserAccountStatusType> userAccountStatusType = userAccountStatusTypeRepository.findById(3);
+				listofUserAccounts.get(0).setUserAccountStatusType(userAccountStatusType.get());
+				listofUserAccounts.get(0).setAccountRegStatusType(AccountRegStatusType.get());
+				accountRepository.save(listofUserAccounts.get(0));
+				response.setStatusCode(117);
+				response.setMessage("Current Rejected ");
+				return response;
+			}
+			if (listofUserAccounts.get(1).getAccountRegStatusType().getId() == 1
+					&& listofUserAccounts.get(1).getUserAccountType().getId() == request.getAccounttype() && request.getAccounttype() == 2) {
+				Optional<AccountRegStatusType> AccountRegStatusType = AccountRegStatusTypeRepo.findById(3);
+				Optional<UserAccountStatusType> userAccountStatusType = userAccountStatusTypeRepository.findById(3);
+				listofUserAccounts.get(1).setUserAccountStatusType(userAccountStatusType.get());
+				listofUserAccounts.get(1).setAccountRegStatusType(AccountRegStatusType.get());
+				accountRepository.save(listofUserAccounts.get(1));
+				response.setStatusCode(117);
+				response.setMessage("Current Rejected ");
+				return response;
+			}
+		}
+		response.setStatusCode(118);
+		response.setMessage("Unable to perform action at this movement of time");
 		return response;
 	}
 }
