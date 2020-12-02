@@ -4,5 +4,6 @@ import lombok.Data;
 
 @Data
 public class AccountCreationResponse {
+	private int statuscode;
 	private String Message;
 }

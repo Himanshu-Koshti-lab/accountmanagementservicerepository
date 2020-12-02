@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tcs.poc.app.entity.User;
+import com.tcs.poc.app.model.AccountCreationApproveRejectRequest;
+import com.tcs.poc.app.model.AccountCreationApproveRejectResponse;
 import com.tcs.poc.app.model.AccountCreationRequest;
 import com.tcs.poc.app.model.AccountCreationResponse;
 import com.tcs.poc.app.service.AccountService;
@@ -36,6 +38,13 @@ public class AccountController {
 		
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(method = RequestMethod.POST, value = "/register-accountApprovereject", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public AccountCreationApproveRejectResponse verifyAccountRequestApproved(@RequestBody AccountCreationApproveRejectRequest user) throws Exception
+	{
+		return service.verifyAccountRequestApproved(user);
+	}
+	
 //	@PreAuthorize("hasRole('ROLE_ADMIN')")
 //	@RequestMapping(method = RequestMethod.POST, value = "/register-accountApprove", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 //	public void verifyAccountRequestApproved(@RequestBody User user) throws Exception
