@@ -27,7 +27,7 @@ public class UpdateAccountStatusService {
 	public AccountUpdateRequestStatusRepo accUpdReqRepo;
 
 	public UpdateAccountStatusResponse saveUserRequest(AccountUpdateRequest request) {
-		Account account = accountrepo.findByUserId(request.getUserId());
+		List<Account> account = accountrepo.findByUserId(request.getUserId());
 		UpdateAccountStatusResponse accountStatusResponse = new UpdateAccountStatusResponse();
 		if (account == null) {
 			accountStatusResponse.setStatus(0);
@@ -79,19 +79,19 @@ public class UpdateAccountStatusService {
 				reqtable = reqtable1.get(i);
 			}
 		}
-		Account mainaccount = accountrepo.findByUserId(request.getUserid());
+		List<Account> mainaccount = accountrepo.findByUserId(request.getUserid());
 		if (reqtable == null) {
 			response.setStatus(0);
 			response.setMessage("User not Found in Request Table");
 			return response;
 		}
 
-		if (reqtable.getUserId() == mainaccount.getUserId()) {
+		if (reqtable.getUserId() == mainaccount.get(0).getUserId()) {
 			AccountUpdateRequestStatus status = accUpdReqRepo.findById(2);
 			reqtable.setAccountUpdateRequestStatus(status);
 			accrepo.save(reqtable);
-			mainaccount.setUserAccountStatusType(reqtable.getUserAccountStatusType());
-			accountrepo.save(mainaccount);
+			mainaccount.get(0).setUserAccountStatusType(reqtable.getUserAccountStatusType());
+			accountrepo.save(mainaccount.get(0));
 			response.setStatus(1);
 			response.setMessage("Mobile Number Updated Request Approved");
 			return response;
@@ -132,19 +132,19 @@ public class UpdateAccountStatusService {
 				reqtable = reqtable1.get(i);
 			}
 		}
-		Account mainaccount = accountrepo.findByUserId(request.getUserid());
+		List<Account> mainaccount = accountrepo.findByUserId(request.getUserid());
 		if (reqtable == null) {
 			response.setStatus(0);
 			response.setMessage("User not Found in Request Table");
 			return response;
 		}
 
-		if (reqtable.getUserId() == mainaccount.getUserId()) {
+		if (reqtable.getUserId() == mainaccount.get(0).getUserId()) {
 			AccountUpdateRequestStatus status = accUpdReqRepo.findById(3);
 			reqtable.setAccountUpdateRequestStatus(status);
 			accrepo.save(reqtable);
-			mainaccount.setUserAccountStatusType(reqtable.getUserAccountStatusType());
-			accountrepo.save(mainaccount);
+			mainaccount.get(0).setUserAccountStatusType(reqtable.getUserAccountStatusType());
+			accountrepo.save(mainaccount.get(0));
 			response.setStatus(1);
 			response.setMessage("Mobile Number Updated Request Rejected");
 			return response;

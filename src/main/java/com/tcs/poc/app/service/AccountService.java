@@ -37,72 +37,31 @@ public class AccountService {
 	private UserAccountStatusTypeRepository userAccountStatusTypeRepository;
 
 	public AccountCreationResponse accountCreationRequest(AccountCreationRequest user) throws Exception {
-		Account account = new Account();
+		List<Account> listofaccount = accountRepository.findByUserId(user.getUser_id());
 		AccountCreationResponse accountcreation = new AccountCreationResponse();
-		List<Account> listofaccount = accountRepository.findAll();
-		List<Account> listUseraccount = null;
-		int count = 0;
-		for(int i=0;i<listofaccount.size();i++) {
-			if(listofaccount.get(i).getUserId() == user.getUser_id()) {				
-				if(listofaccount.get(i).getUserAccountType().getId() == 1) {
-					listUseraccount.add(listofaccount.get(i));
-					count++;
-					// user have saving account
-				}
-				if(listofaccount.get(i).getUserAccountType().getId() == 2) {
-					listUseraccount.add(listofaccount.get(i));
-					count++;
-					// user have current account
-				}				
+		if(listofaccount.size() == 2) {
+			
+			if(listofaccount.get(0).getAccountRegStatusType().getId() == 1 && user.getUserAccountType() ==1 ) {
+				accountcreation.setMessage("User Already have salary account pending for approve");
+				return accountcreation;
+			}
+			if(listofaccount.get(0).getAccountRegStatusType().getId() == 1 && user.getUserAccountType() ==2 ) {
+				accountcreation.setMessage("User Already have current account pending for approve");
+				return accountcreation;
+			}
+			if(listofaccount.get(1).getAccountRegStatusType().getId() == 1 && user.getUserAccountType() ==1 ) {
+				accountcreation.setMessage("User Already have salary account pending for approve");
+				return accountcreation;
+			}
+			if(listofaccount.get(1).getAccountRegStatusType().getId() == 1 && user.getUserAccountType() ==2 ) {
+				accountcreation.setMessage("User Already have current account pending for approve");
+				return accountcreation;
 			}
 		}
-		if(count == 2) {
-			accountcreation.setMessage("User Already have both type of account");
-			return accountcreation;
-		}else if(listUseraccount.get(0).getUserAccountType().getId() == 1 && user.getUserAccountType() == 1){
-			//user already have salary account
-			accountcreation.setMessage("User Already have Salary account");
-			return accountcreation;
-		}else if(listofaccount.get(0).getUserAccountType().getId() == 1 && user.getUserAccountType() == 2){
-			//create current account
-			Optional<UserAccountType> userAccountType = userAccountTypeRepository.findById(2);
-			Optional<UserAccountStatusType> userAccountStatusType = userAccountStatusTypeRepository.findById(3);
-			Optional<AccountRegStatusType> userAccountRegStatusType = AccountRegStatusTypeRepo.findById(1);
-			account.setUserId(user.getUser_id());
-			account.setUserAccountType(userAccountType.get());
-			account.setUserAccountStatusType(userAccountStatusType.get());
-			account.setAccountRegStatusType(userAccountRegStatusType.get());
-			account.setCreatedDate(new Date());
-			account.setLastModifiedDate(new Date());
-			account.setCreatedBy(user.getEmailID());
-			account.setModifiedBy(user.getEmailID());
-			accountRepository.save(account);
-			System.out.println("Account creation request successfully submit");
-			accountcreation.setMessage("User submit Current account creation request Successfully");
-			return accountcreation;
-		}else if(listUseraccount.get(0).getUserAccountType().getId() == 2 && user.getUserAccountType() == 2){
-			//user already have current account
-			accountcreation.setMessage("User Already have Current account");
-			return accountcreation;
-		}else if(listofaccount.get(0).getUserAccountType().getId() == 2 && user.getUserAccountType() == 1){
-			//create salary account
-			Optional<UserAccountType> userAccountType = userAccountTypeRepository.findById(1);
-			Optional<UserAccountStatusType> userAccountStatusType = userAccountStatusTypeRepository.findById(3);
-			Optional<AccountRegStatusType> userAccountRegStatusType = AccountRegStatusTypeRepo.findById(1);
-			account.setUserId(user.getUser_id());
-			account.setUserAccountType(userAccountType.get());
-			account.setUserAccountStatusType(userAccountStatusType.get());
-			account.setAccountRegStatusType(userAccountRegStatusType.get());
-			account.setCreatedDate(new Date());
-			account.setLastModifiedDate(new Date());
-			account.setCreatedBy(user.getEmailID());
-			account.setModifiedBy(user.getEmailID());
-			accountRepository.save(account);
-			System.out.println("Account creation request successfully submit");
-			accountcreation.setMessage("User submit Salary account creation request Successfully");
-			return accountcreation;
-		}else {
-			// First account
+		
+		if(listofaccount.isEmpty()) {
+			//create new account
+			Account account = new Account();
 			Optional<UserAccountType> userAccountType = userAccountTypeRepository.findById(user.getUserAccountType());
 			Optional<UserAccountStatusType> userAccountStatusType = userAccountStatusTypeRepository.findById(3);
 			Optional<AccountRegStatusType> userAccountRegStatusType = AccountRegStatusTypeRepo.findById(1);
@@ -117,9 +76,56 @@ public class AccountService {
 			accountRepository.save(account);
 			accountcreation.setMessage("User Submit out first account creation request");
 			return accountcreation;
+		}else {
+			if(user.getUserAccountType() ==1) {
+				if(listofaccount.get(0).getUserAccountType().getId() == 1 && user.getUserAccountType() == 1 ) {
+					accountcreation.setMessage("User Submit already have salary account");
+					return accountcreation;
+				}else {
+					Account account = new Account();
+					Optional<UserAccountType> userAccountType = userAccountTypeRepository.findById(user.getUserAccountType());
+					Optional<UserAccountStatusType> userAccountStatusType = userAccountStatusTypeRepository.findById(3);
+					Optional<AccountRegStatusType> userAccountRegStatusType = AccountRegStatusTypeRepo.findById(1);
+					account.setUserId(user.getUser_id());
+					account.setUserAccountType(userAccountType.get());
+					account.setUserAccountStatusType(userAccountStatusType.get());
+					account.setAccountRegStatusType(userAccountRegStatusType.get());
+					account.setCreatedDate(new Date());
+					account.setLastModifiedDate(new Date());
+					account.setCreatedBy(user.getEmailID());
+					account.setModifiedBy(user.getEmailID());
+					accountRepository.save(account);
+					accountcreation.setMessage("User Submit out salary account creation request");
+					return accountcreation;
+				}
+			}
+			if(user.getUserAccountType() == 2) {
+				if(listofaccount.get(0).getUserAccountType().getId() == 2 && user.getUserAccountType() == 2) {
+					accountcreation.setMessage("User Submit already have current account");
+					return accountcreation;
+				}else {
+					Account account = new Account();
+					Optional<UserAccountType> userAccountType = userAccountTypeRepository.findById(user.getUserAccountType());
+					Optional<UserAccountStatusType> userAccountStatusType = userAccountStatusTypeRepository.findById(3);
+					Optional<AccountRegStatusType> userAccountRegStatusType = AccountRegStatusTypeRepo.findById(1);
+					account.setUserId(user.getUser_id());
+					account.setUserAccountType(userAccountType.get());
+					account.setUserAccountStatusType(userAccountStatusType.get());
+					account.setAccountRegStatusType(userAccountRegStatusType.get());
+					account.setCreatedDate(new Date());
+					account.setLastModifiedDate(new Date());
+					account.setCreatedBy(user.getEmailID());
+					account.setModifiedBy(user.getEmailID());
+					accountRepository.save(account);
+					accountcreation.setMessage("User Submit out current account creation request");
+					return accountcreation;
+				}
+			}
+			accountcreation.setMessage("Unable to get request this movement of time");
+			return accountcreation;			
 		}
 		
-	}	
+	}
 		
 		
 		
@@ -136,24 +142,31 @@ public class AccountService {
 		
 		
 		
-		//		User tempUser = registrationRepository.findByEmailID(user.getEmailID());
-//			Optional<UserAccountType> userAccountType = userAccountTypeRepository.findById(1);
-//			Optional<UserAccountStatusType> userAccountStatusType = userAccountStatusTypeRepository.findById(3);
-//			Optional<AccountRegStatusType> userAccountRegStatusType = AccountRegStatusTypeRepo.findById(1);
-//
-//			account.setUserId(user.getUser_id());
-//			account.setUserAccountType(userAccountType.get());
-//			account.setUserAccountStatusType(userAccountStatusType.get());
-//			account.setAccountRegStatusType(userAccountRegStatusType.get());
-//			account.setCreatedDate(new Date());
-//			account.setLastModifiedDate(new Date());
-//			account.setCreatedBy(user.getEmailID());
-//			account.setModifiedBy(user.getEmailID());
-//			accountRepository.save(account);
-//			System.out.println("Account creation request successfully submit");
-//		}
-//
-//	}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
 
 //	public void verifyAccountRequestApproved(User user) throws Exception {
 //
