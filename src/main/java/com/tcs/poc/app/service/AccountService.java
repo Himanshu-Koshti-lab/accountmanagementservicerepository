@@ -232,26 +232,29 @@ public class AccountService {
 				response.setMessage("Salary Approved ");
 				return response;
 			}
-			if (listofUserAccounts.get(1).getAccountRegStatusType().getId() == 1
-					&& listofUserAccounts.get(1).getUserAccountType().getId() == request.getAccounttype() && request.getAccounttype() == 1) {
-				Optional<UserAccountStatusType> userAccountStatusType = userAccountStatusTypeRepository.findById(1);
-				Optional<AccountRegStatusType> AccountRegStatusType = AccountRegStatusTypeRepo.findById(2);
-				boolean x = true;
-				while (x) {
-					int tempAccountNo = (int) (Math.random() * 1000000);
-					listofUserAccounts.get(1).setAccountNumber(tempAccountNo);
-					x = !(accountRepository.findByAccountNumber(tempAccountNo) == null);
+			if(listofUserAccounts.size() == 2) {
+				if (listofUserAccounts.get(1).getAccountRegStatusType().getId() == 1
+						&& listofUserAccounts.get(1).getUserAccountType().getId() == request.getAccounttype() && request.getAccounttype() == 1) {
+					Optional<UserAccountStatusType> userAccountStatusType = userAccountStatusTypeRepository.findById(1);
+					Optional<AccountRegStatusType> AccountRegStatusType = AccountRegStatusTypeRepo.findById(2);
+					boolean x = true;
+					while (x) {
+						int tempAccountNo = (int) (Math.random() * 1000000);
+						listofUserAccounts.get(1).setAccountNumber(tempAccountNo);
+						x = !(accountRepository.findByAccountNumber(tempAccountNo) == null);
 
+					}
+					listofUserAccounts.get(1).setBalance(500);
+					listofUserAccounts.get(1).setUserAccountStatusType(userAccountStatusType.get());
+					listofUserAccounts.get(1).setAccountRegStatusType(AccountRegStatusType.get());
+					System.out.println(listofUserAccounts.get(1).getAccountNumber());
+					accountRepository.save(listofUserAccounts.get(1));
+					response.setStatusCode(115);
+					response.setMessage("Salary Approved ");
+					return response;
 				}
-				listofUserAccounts.get(1).setBalance(500);
-				listofUserAccounts.get(1).setUserAccountStatusType(userAccountStatusType.get());
-				listofUserAccounts.get(1).setAccountRegStatusType(AccountRegStatusType.get());
-				System.out.println(listofUserAccounts.get(1).getAccountNumber());
-				accountRepository.save(listofUserAccounts.get(1));
-				response.setStatusCode(115);
-				response.setMessage("Salary Approved ");
-				return response;
 			}
+			
 			//Current Approved
 			if (listofUserAccounts.get(0).getAccountRegStatusType().getId() == 1
 					&& listofUserAccounts.get(0).getUserAccountType().getId() == request.getAccounttype() && request.getAccounttype() == 2) {
@@ -273,6 +276,8 @@ public class AccountService {
 				response.setMessage("Current Approved ");
 				return response;
 			}
+
+			if(listofUserAccounts.size() == 2) {
 			if (listofUserAccounts.get(1).getAccountRegStatusType().getId() == 1
 					&& listofUserAccounts.get(1).getUserAccountType().getId() == request.getAccounttype() && request.getAccounttype() == 2) {
 				Optional<UserAccountStatusType> userAccountStatusType = userAccountStatusTypeRepository.findById(1);
@@ -292,6 +297,7 @@ public class AccountService {
 				response.setStatusCode(116);
 				response.setMessage("Current Approved ");
 				return response;
+			}
 			}
 		}
 		if (request.getAccountregstatus() == 3) {
