@@ -1,5 +1,6 @@
 package com.tcs.poc.app.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +16,8 @@ import com.tcs.poc.app.model.AccountCreationApproveRejectRequest;
 import com.tcs.poc.app.model.AccountCreationApproveRejectResponse;
 import com.tcs.poc.app.model.AccountCreationRequest;
 import com.tcs.poc.app.model.AccountCreationResponse;
+import com.tcs.poc.app.model.AccountResponse;
+import com.tcs.poc.app.model.UserResponse;
 import com.tcs.poc.app.repository.AccountRegStatusTypeRepo;
 import com.tcs.poc.app.repository.AccountRepository;
 import com.tcs.poc.app.repository.UserAccountStatusTypeRepository;
@@ -353,6 +356,42 @@ public class AccountService {
 		response.setStatusCode(118);
 		response.setMessage("Unable to perform action at this movement of time");
 		return response;
+	}
+
+	public List<AccountResponse> AllAccount() {
+		List<Account> tempAcc = accountRepository.findAll();
+		List<AccountResponse> temp2 = new ArrayList<>();
+		for(int i= 0 ;i< tempAcc.size();i++) {
+			AccountResponse temp = new AccountResponse();
+			temp.setUserId(tempAcc.get(i).getUserId());
+			temp.setAccountNumber(tempAcc.get(i).getAccountNumber());
+			temp.setAccountRegStatusType(tempAcc.get(i).getAccountRegStatusType().getId());
+			temp.setBalance(tempAcc.get(i).getBalance());
+			temp.setUserAccountType(tempAcc.get(i).getUserAccountType().getId());
+			temp.setUserAccountStatusType(tempAcc.get(i).getUserAccountStatusType().getId());
+			temp2.add(temp);
+		}
+		return temp2;
+	}
+
+	public List<Account> Allacc() {
+		return accountRepository.findAll();
+	}
+
+	public List<AccountResponse> Allaccs() {
+		List<AccountResponse> accountResponses = new ArrayList<AccountResponse>();
+		List<Account> accounts = accountRepository.findAll();
+		for(int i=0;i<accounts.size();i++) {
+			AccountResponse accountResponse = new AccountResponse();
+			accountResponse.setUserId(accounts.get(i).getUserId());
+			accountResponse.setAccountRegStatusType(accounts.get(i).getAccountRegStatusType().getId());
+			accountResponse.setAccountNumber(accounts.get(i).getAccountNumber());
+			accountResponse.setBalance(accounts.get(i).getBalance());
+			accountResponse.setUserAccountStatusType(accounts.get(i).getUserAccountStatusType().getId());
+			accountResponse.setUserAccountType(accounts.get(i).getUserAccountType().getId());
+			accountResponses.add(accountResponse);
+		}
+		return accountResponses;
 	}
 }
 

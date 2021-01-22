@@ -1,26 +1,30 @@
 package com.tcs.poc.app.controller;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tcs.poc.app.entity.User;
+import com.tcs.poc.app.entity.Account;
 import com.tcs.poc.app.model.AccountCreationApproveRejectRequest;
 import com.tcs.poc.app.model.AccountCreationApproveRejectResponse;
 import com.tcs.poc.app.model.AccountCreationRequest;
 import com.tcs.poc.app.model.AccountCreationResponse;
+import com.tcs.poc.app.model.AccountResponse;
 import com.tcs.poc.app.service.AccountService;
 
 
 @RestController
-@CrossOrigin
 public class AccountController {
 
 	@Autowired
@@ -37,7 +41,7 @@ public class AccountController {
 		}
 		
 	}
-
+	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.POST, value = "/register-accountApprovereject", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public AccountCreationApproveRejectResponse verifyAccountRequestApproved(@RequestBody AccountCreationApproveRejectRequest user) throws Exception
@@ -60,7 +64,25 @@ public class AccountController {
 //	}
 	
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(method = RequestMethod.GET, value = "/allAccount", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public List<AccountResponse> verifyAccountRequestReject() throws Exception
+	{
+		return  service.AllAccount();
+	}
 	
+//	@PreAuthorize("hasRole('ROLE_ADMIN')")
+//	@GetMapping(value = "/AllAccs")
+//	@ResponseBody
+//	public List<Account> AllUsers() {
+//		 return service.Allacc();	
+//	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@GetMapping(value = "/AllAccs")
+	@ResponseBody
+	public List<AccountResponse> Allaccs() {
+		 return service.Allaccs();	
+	}
 	
 }
