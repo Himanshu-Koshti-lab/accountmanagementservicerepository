@@ -17,7 +17,6 @@ import com.tcs.poc.app.model.AccountCreationApproveRejectResponse;
 import com.tcs.poc.app.model.AccountCreationRequest;
 import com.tcs.poc.app.model.AccountCreationResponse;
 import com.tcs.poc.app.model.AccountResponse;
-import com.tcs.poc.app.model.UserResponse;
 import com.tcs.poc.app.repository.AccountRegStatusTypeRepo;
 import com.tcs.poc.app.repository.AccountRepository;
 import com.tcs.poc.app.repository.UserAccountStatusTypeRepository;
