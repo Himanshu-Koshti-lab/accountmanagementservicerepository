@@ -377,6 +377,18 @@ public class AccountService {
 	public List<Account> Allacc() {
 		return accountRepository.findAll();
 	}
+	
+	public AccountResponse getAccount(double accountNumber) {
+		AccountResponse accountResponse = new AccountResponse();
+		Account accounts =  accountRepository.findByAccountNumber(accountNumber);
+		accountResponse.setUserId(accounts.getUserId());
+		accountResponse.setAccountRegStatusType(accounts.getAccountRegStatusType().getId());
+		accountResponse.setAccountNumber(accounts.getAccountNumber());
+		accountResponse.setBalance(accounts.getBalance());
+		accountResponse.setUserAccountStatusType(accounts.getUserAccountStatusType().getId());
+		accountResponse.setUserAccountType(accounts.getUserAccountType().getId());
+		return accountResponse;
+	}
 
 	public List<AccountResponse> Allaccs() {
 		List<AccountResponse> accountResponses = new ArrayList<AccountResponse>();
@@ -392,6 +404,12 @@ public class AccountService {
 			accountResponses.add(accountResponse);
 		}
 		return accountResponses;
+	}
+
+	public void upDateBalance(AccountResponse account) {
+		Account account2 = accountRepository.findByAccountNumber(account.getAccountNumber());
+		account2.setBalance(account.getBalance());
+		accountRepository.save(account2);
 	}
 }
 

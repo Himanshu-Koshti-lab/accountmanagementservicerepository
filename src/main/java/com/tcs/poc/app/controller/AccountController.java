@@ -9,6 +9,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -83,6 +86,20 @@ public class AccountController {
 	@ResponseBody
 	public List<AccountResponse> Allaccs() {
 		 return service.Allaccs();	
+	}
+	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_CUSTOMER')")
+	@GetMapping(value = "/getAccount/{id}")
+	@ResponseBody
+	public AccountResponse getAccount(@PathVariable("id") double accountNumber) {
+		 return service.getAccount(accountNumber);	
+	}
+	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_CUSTOMER')")
+	@PostMapping(value = "/upDateBalance")
+	@ResponseBody
+	public void upDateBalance(@RequestBody AccountResponse account) {
+		service.upDateBalance(account);	
 	}
 	
 }
