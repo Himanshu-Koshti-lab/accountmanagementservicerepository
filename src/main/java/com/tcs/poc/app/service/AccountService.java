@@ -6,7 +6,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.tcs.poc.app.entity.Account;
 import com.tcs.poc.app.entity.AccountRegStatusType;
@@ -17,10 +23,12 @@ import com.tcs.poc.app.model.AccountCreationApproveRejectResponse;
 import com.tcs.poc.app.model.AccountCreationRequest;
 import com.tcs.poc.app.model.AccountCreationResponse;
 import com.tcs.poc.app.model.AccountResponse;
+import com.tcs.poc.app.model.UserResponse;
 import com.tcs.poc.app.repository.AccountRegStatusTypeRepo;
 import com.tcs.poc.app.repository.AccountRepository;
 import com.tcs.poc.app.repository.UserAccountStatusTypeRepository;
 import com.tcs.poc.app.repository.UserAccountTypeRepository;
+import com.tcs.poc.app.utils.BankConstants;
 
 @Service
 public class AccountService {
@@ -429,6 +437,28 @@ public class AccountService {
 		Account account2 = accountRepository.findByAccountNumber(account.getAccountNumber());
 		account2.setBalance(account.getBalance());
 		accountRepository.save(account2);
+	}
+
+	public List<AccountResponse> getUserAccounts(String token) {
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders  headers4 = new HttpHeaders();
+		headers4.set("Authorization", token);
+		headers4.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<String> entity4 = new HttpEntity<String>(headers4);
+		ResponseEntity<UserResponse> responseU = restTemplate.exchange(BankConstants.USER_API_URL+"/getUser", HttpMethod.GET ,entity4 , UserResponse.class);
+		List<Account> tempAcc = accountRepository.findByUserId(responseU.getBody().getUser_id());
+		List<AccountResponse> temp2 = new ArrayList<>();
+		for(int i= 0 ;i< tempAcc.size();i++) {
+			AccountResponse temp = new AccountResponse();
+			temp.setUserId(tempAcc.get(i).getUserId());
+			temp.setAccountNumber(tempAcc.get(i).getAccountNumber());
+			temp.setAccountRegStatusType(tempAcc.get(i).getAccountRegStatusType().getId());
+			temp.setBalance(tempAcc.get(i).getBalance());
+			temp.setUserAccountType(tempAcc.get(i).getUserAccountType().getId());
+			temp.setUserAccountStatusType(tempAcc.get(i).getUserAccountStatusType().getId());
+			temp2.add(temp);
+		}
+		return temp2;
 	}
 }
 

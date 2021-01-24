@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.tcs.poc.app.model.AccountCreationApproveRejectRequest;
@@ -77,7 +78,7 @@ public class AccountController {
 //		 return service.Allacc();	
 //	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
 	@GetMapping(value = "/AllAccs")
 	@ResponseBody
 	public List<AccountResponse> Allaccs() {
@@ -97,5 +98,13 @@ public class AccountController {
 	public void upDateBalance(@RequestBody AccountResponse account) {
 		service.upDateBalance(account);	
 	}
+	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_CUSTOMER')")
+	@GetMapping(value = "/getUserAccounts")
+	@ResponseBody
+	public List<AccountResponse> getUserAccounts(@RequestHeader("Authorization") String token) {
+		 return service.getUserAccounts(token);	
+	}
+	
 	
 }
