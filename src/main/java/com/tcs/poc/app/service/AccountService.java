@@ -53,17 +53,17 @@ public class AccountService {
 		AccountCreationResponse accountcreation = new AccountCreationResponse();
 		if (listofaccount.size() == 2) {
 
-			if (listofaccount.get(0).getAccountRegStatusType().getId() == 1 && user.getUserAccountType() == 1 && user.getUserAccountType() == listofaccount.get(1).getUserAccountType().getId()) {
+			if (listofaccount.get(0).getAccountRegStatusType().getId() == 1 && user.getUserAccountType() == 1 && user.getUserAccountType() == listofaccount.get(0).getUserAccountType().getId()) {
 				accountcreation.setStatuscode(500);
 				accountcreation.setMessage("User already raised request for salary account, pending for the approval.");
 				return accountcreation;
 			}
-			if (listofaccount.get(0).getAccountRegStatusType().getId() == 1 && user.getUserAccountType() == 2 && user.getUserAccountType() == listofaccount.get(1).getUserAccountType().getId()) {
+			if (listofaccount.get(0).getAccountRegStatusType().getId() == 1 && user.getUserAccountType() == 2 && user.getUserAccountType() == listofaccount.get(0).getUserAccountType().getId()) {
 				accountcreation.setStatuscode(501);
 				accountcreation.setMessage("User already raised request for current account, pending for the approval.");
 				return accountcreation;
 			}
-			if (listofaccount.get(0).getAccountRegStatusType().getId() == 2 && user.getUserAccountType() == 1 && user.getUserAccountType() == listofaccount.get(1).getUserAccountType().getId()) {
+			if (listofaccount.get(0).getAccountRegStatusType().getId() == 2 && user.getUserAccountType() == 1 && user.getUserAccountType() == listofaccount.get(0).getUserAccountType().getId()) {
 				accountcreation.setStatuscode(500);
 				accountcreation.setMessage("User already have Salary Account.");
 				return accountcreation;
