@@ -45,14 +45,12 @@ class AccountStatusController {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping(value = "/UpdateAccountStatusApproved")
 	public UpdateAccountStatusResponse UpdateAccountStatusResponse(@RequestBody UpdateAccountStatusRequest request) {
-		System.out.println(request.getEmailId());
 		return service.UpdateAccountStatusApproved(request);
 	}
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping(value = "/UpdateAccountStatusReject")
 	public UpdateAccountStatusResponse UpdateAccountStatusRejected(@RequestBody UpdateAccountStatusRequest request) {
-		System.out.println(request.getEmailId());
 		return service.UpdateAccountStatusRejected(request);
 	} 
 }
