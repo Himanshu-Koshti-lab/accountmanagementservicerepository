@@ -72,7 +72,6 @@ public class UpdateAccountStatusService {
 		List<AccountUpdateRequest> reqtable1 = accrepo.findAll();
 		AccountUpdateRequest reqtable = new AccountUpdateRequest();
 		UpdateAccountStatusResponse response = new UpdateAccountStatusResponse();
-		System.out.println(reqtable1.size());
 		for (int i = 0; i < reqtable1.size(); i++) {
 			if (reqtable1.get(i).getAccountUpdateRequestStatus().getId() == 1
 					&& reqtable1.get(i).getEmailID().equals(request.getEmailId())) {
@@ -125,7 +124,6 @@ public class UpdateAccountStatusService {
 		List<AccountUpdateRequest> reqtable1 = accrepo.findAll();
 		AccountUpdateRequest reqtable = new AccountUpdateRequest();
 		UpdateAccountStatusResponse response = new UpdateAccountStatusResponse();
-		System.out.println(reqtable1.size());
 		for (int i = 0; i < reqtable1.size(); i++) {
 			if (reqtable1.get(i).getAccountUpdateRequestStatus().getId() == 1
 					&& reqtable1.get(i).getEmailID().equals(request.getEmailId())) {
