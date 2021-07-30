@@ -22,35 +22,35 @@ class AccountStatusController {
 	@Autowired
 	public UpdateAccountStatusService service;
 
-	@PreAuthorize("hasRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')")
-	@PostMapping(value = "/Request")
-	public UpdateAccountStatusResponse addUserUpdateReq(@RequestBody AccountUpdateRequest request,
-			@AuthenticationPrincipal String emailID) throws Exception {
-		UpdateAccountStatusResponse accountStatusResponse = new UpdateAccountStatusResponse();
-		
-		if (request.getEmailID().equals(emailID))
-			return service.saveUserRequest(request);
-		accountStatusResponse.setStatus(0);
-		accountStatusResponse.setMessage("Request not Submited Due to Account Not Found with this User ID");
-		return accountStatusResponse;
-
-	}
-
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@GetMapping(value = "/AccountStatusrequestlist")
-	public List<AccountUpdateRequest> findAllRequests() {
-		return service.getUserRequests();
-	}
-
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@PostMapping(value = "/UpdateAccountStatusApproved")
-	public UpdateAccountStatusResponse UpdateAccountStatusResponse(@RequestBody UpdateAccountStatusRequest request) {
-		return service.UpdateAccountStatusApproved(request);
-	}
-
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@PostMapping(value = "/UpdateAccountStatusReject")
-	public UpdateAccountStatusResponse UpdateAccountStatusRejected(@RequestBody UpdateAccountStatusRequest request) {
-		return service.UpdateAccountStatusRejected(request);
-	} 
+//	@PreAuthorize("hasRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')")
+//	@PostMapping(value = "/Request")
+//	public UpdateAccountStatusResponse addUserUpdateReq(@RequestBody AccountUpdateRequest request,
+//			@AuthenticationPrincipal String emailID) throws Exception {
+//		UpdateAccountStatusResponse accountStatusResponse = new UpdateAccountStatusResponse();
+//		
+//		if (request.getEmailID().equals(emailID))
+//			return service.saveUserRequest(request);
+//		accountStatusResponse.setStatus(0);
+//		accountStatusResponse.setMessage("Request not Submited Due to Account Not Found with this User ID");
+//		return accountStatusResponse;
+//
+//	}
+//
+//	@PreAuthorize("hasRole('ROLE_ADMIN')")
+//	@GetMapping(value = "/AccountStatusrequestlist")
+//	public List<AccountUpdateRequest> findAllRequests() {
+//		return service.getUserRequests();
+//	}
+//
+//	@PreAuthorize("hasRole('ROLE_ADMIN')")
+//	@PostMapping(value = "/UpdateAccountStatusApproved")
+//	public UpdateAccountStatusResponse UpdateAccountStatusResponse(@RequestBody UpdateAccountStatusRequest request) {
+//		return service.UpdateAccountStatusApproved(request);
+//	}
+//
+//	@PreAuthorize("hasRole('ROLE_ADMIN')")
+//	@PostMapping(value = "/UpdateAccountStatusReject")
+//	public UpdateAccountStatusResponse UpdateAccountStatusRejected(@RequestBody UpdateAccountStatusRequest request) {
+//		return service.UpdateAccountStatusRejected(request);
+//	} 
 }
