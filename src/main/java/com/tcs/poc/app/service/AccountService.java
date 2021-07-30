@@ -36,9 +36,6 @@ public class AccountService {
 	@Autowired
 	private AccountRepository accountRepository;
 
-//	@Autowired
-//	private UserRepository registrationRepository;
-
 	@Autowired
 	private UserAccountTypeRepository userAccountTypeRepository;
 
@@ -96,7 +93,6 @@ public class AccountService {
 		}
 
 		if (listofaccount.isEmpty()) {
-			// create new account
 			Account account = new Account();
 			Optional<UserAccountType> userAccountType = userAccountTypeRepository.findById(user.getUserAccountType());
 			Optional<UserAccountStatusType> userAccountStatusType = userAccountStatusTypeRepository.findById(3);
@@ -474,46 +470,3 @@ public class AccountService {
 		return temp2;
 	}
 }
-
-//		if (tempAccount.getAccountRegStatusType().getId() == 1) {
-//			Optional<UserAccountStatusType> userAccountStatusType = userAccountStatusTypeRepository.findById(1);
-//			Optional<AccountRegStatusType> AccountRegStatusType = AccountRegStatusTypeRepo.findById(2);
-//			boolean x = true;
-//			while (x) {
-//				int tempAccountNo = (int) (Math.random() * 1000000);
-//				tempAccount.setAccountNumber(tempAccountNo);
-//				x = !(accountRepository.findByAccountNumber(tempAccountNo) == null);
-//
-//			}
-//			// tempAccount.setUserAccountType(userAccountType.get());
-//			tempAccount.setBalance(500);
-//			tempAccount.setUserAccountStatusType(userAccountStatusType.get());
-//			tempAccount.setAccountRegStatusType(AccountRegStatusType.get());
-//			System.out.println(tempAccount.getAccountNumber());
-//			accountRepository.save(tempAccount);
-//		} else if (tempAccount.getAccountRegStatusType().getId() == 2) {
-//			throw new Exception("Already approved");
-//		} else {
-//			throw new Exception("Already Rejected");
-//		}
-
-//	}	
-
-//
-//	public void verifyAccountRequestReject(User user) throws Exception {
-//
-//		User tempUser = registrationRepository.findByEmailID(user.getEmailID());
-//		Account tempAccount = accountRepository.findByUserId(tempUser.getId());
-//		if (tempAccount.getAccountRegStatusType().getId() == 1) {
-//			Optional<AccountRegStatusType> AccountRegStatusType = AccountRegStatusTypeRepo.findById(3);
-//			Optional<UserAccountStatusType> userAccountStatusType = userAccountStatusTypeRepository.findById(3);
-//			tempAccount.setUserAccountStatusType(userAccountStatusType.get());
-//			tempAccount.setAccountRegStatusType(AccountRegStatusType.get());
-//			accountRepository.save(tempAccount);
-//		} else if (tempAccount.getAccountRegStatusType().getId() == 2) {
-//			throw new Exception("Already approved");
-//		} else {
-//			throw new Exception("Already Rejected");
-//		}
-//
-//	}

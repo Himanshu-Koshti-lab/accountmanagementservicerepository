@@ -27,8 +27,6 @@ public class AccountController {
 	@Autowired
 	private AccountService service;
 	
-	
-	//@RequestMapping(method = RequestMethod.POST, value = "/register-account", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@PostMapping(value = "/register-account")
 	public AccountCreationResponse createAccountRequest(@RequestBody AccountCreationRequest user ,@AuthenticationPrincipal String emailID) throws Exception {
 		
@@ -36,47 +34,23 @@ public class AccountController {
 		 	return service.accountCreationRequest(user);
 		}else {
 			throw new Exception("User Mismatch");
-		}
-		
+		}		
 	}
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	//@RequestMapping(method = RequestMethod.POST, value = "/register-accountApprovereject", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@PostMapping(value = "/register-accountApprovereject")
 	public AccountCreationApproveRejectResponse verifyAccountRequestApproved(@RequestBody AccountCreationApproveRejectRequest user) throws Exception
 	{
 		return service.verifyAccountRequestApproved(user);
 	}
 	
-//	@PreAuthorize("hasRole('ROLE_ADMIN')")
-//	@RequestMapping(method = RequestMethod.POST, value = "/register-accountApprove", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-//	public void verifyAccountRequestApproved(@RequestBody User user) throws Exception
-//	{
-//		service.verifyAccountRequestApproved(user);
-//	}
-//
-//	@PreAuthorize("hasRole('ROLE_ADMIN')")
-//	@RequestMapping(method = RequestMethod.POST, value = "/register-accountReject", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-//	public void verifyAccountRequestReject(@RequestBody User user) throws Exception
-//	{
-//		service.verifyAccountRequestReject(user);
-//	}
-	
-	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	//@RequestMapping(method = RequestMethod.GET, value = "/allAccount", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@GetMapping("/allAccount")
 	public List<AccountResponse> verifyAccountRequestReject() throws Exception
 	{
 		return  service.AllAccount();
-	}
-	
-//	@PreAuthorize("hasRole('ROLE_ADMIN')")
-//	@GetMapping(value = "/AllAccs")
-//	@ResponseBody
-//	public List<Account> AllUsers() {
-//		 return service.Allacc();	
-//	}
+	}	
+
 	
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
 	@GetMapping(value = "/AllAccs")
@@ -104,7 +78,5 @@ public class AccountController {
 	@ResponseBody
 	public List<AccountResponse> getUserAccounts(@RequestHeader("Authorization") String token) {
 		 return service.getUserAccounts(token);	
-	}
-	
-	
+	}	
 }
